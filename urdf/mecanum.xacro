@@ -1,0 +1,228 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="https://www.ros.org/wiki/xacro" name="mecanum">
+
+<!-- <xacro:include filename="hokuyo_ust10.xacro" /> -->
+<xacro:property name="radius" value="0.05" />
+<xacro:property name="length" value="0.08" />
+<xacro:property name="box_length" value="0.5" />
+<xacro:property name="box_width" value="0.3" />
+<xacro:property name="box_height" value="0.1" />
+
+<material name="blue">
+ <color rgba="0 0 0.8 1" />
+</material>
+<material name="yellow">
+ <color rgba="0.8 0.8 0 1.0" />
+</material>
+<material name="black">
+ <color rgba="0 0 0 1" />
+</material>
+<material name="white">
+ <color rgba="1 1 1 1" />
+</material>
+
+<link name="front_right_wheel">
+    <visual>
+        <origin xyz="0 0 0.05" rpy="1.57075 0 0"  />
+        <geometry>
+            <mesh filename="file://$(find mecanum_launch)/meshes/Mecanum_jo.stl" scale="0.0015 0.0015 0.0015" />
+        </geometry>
+        <material name="black" />
+    </visual>
+    <collision>
+        <geometry>
+            <cylinder length="${length}" radius="${radius}" />
+        </geometry>
+    </collision>
+
+    <inertial>
+        <mass value="0.3"/>
+        <inertia ixx="1e-3" ixy="0" ixz="0" iyy="1e-3" iyz="0" izz="1e-3" />
+    </inertial>
+</link>
+<joint name="front_right_wheel_joint" type="continuous">
+    <parent link="base_link" />
+    <child link="front_right_wheel" />
+    <origin xyz="0.2 -${box_width/2+length/2} -0.05" />
+    <axis xyz="0 1 0" />
+</joint>
+
+
+<link name="front_left_wheel">
+    <visual>
+        <origin xyz="0 0 0.05" rpy="1.57075 0 0"  />
+        <geometry>
+            <mesh filename="file://$(find mecanum_launch)/meshes/Mecanum_jo.stl" scale="0.0015 0.0015 0.0015" />
+        </geometry>
+        <material name="black" />
+    </visual>
+    <collision>
+        <geometry>
+            <cylinder length="${length}" radius="${radius}" />
+        </geometry>
+    </collision>
+
+    <inertial>
+        <mass value="0.3"/>
+        <inertia ixx="1e-3" ixy="0" ixz="0" iyy="1e-3" iyz="0" izz="1e-3" />
+    </inertial>
+</link>
+<joint name="front_left_wheel_joint" type="continuous">
+    <parent link="base_link" />
+    <child link="front_left_wheel" />
+    <origin xyz="0.2 ${box_width/2+length/2} -0.05" />
+    <axis xyz="0 1 0" />
+</joint>
+
+
+<link name="rear_left_wheel">
+    <visual>
+        <origin xyz="0 0 0.05" rpy="1.57075 0 0"  />
+        <geometry>
+            <mesh filename="file://$(find mecanum_launch)/meshes/Mecanum_jo.stl" scale="0.0015 0.0015 0.0015" />
+        </geometry>
+        <material name="black" />
+    </visual>
+    <collision>
+        <geometry>
+            <cylinder length="${length}" radius="${radius}" />
+        </geometry>
+    </collision>
+
+    <inertial>
+        <mass value="0.3"/>
+        <inertia ixx="1e-3" ixy="0" ixz="0" iyy="1e-3" iyz="0" izz="1e-3" />
+    </inertial>
+</link>
+<joint name="rear_left_wheel_joint" type="continuous">
+    <parent link="base_link" />
+    <child link="rear_left_wheel" />
+    <origin xyz="-0.2 ${box_width/2+length/2} -0.05" />
+    <axis xyz="0 1 0" />
+</joint>
+
+    
+<link name="rear_right_wheel">
+    <visual>
+        <origin xyz="0 0 0.05" rpy="1.57075 0 0"  />
+        <geometry>
+            <mesh filename="file://$(find mecanum_launch)/meshes/Mecanum_jo.stl" scale="0.0015 0.0015 0.0015" />
+        </geometry>
+        <material name="black" />
+    </visual>
+    <collision>
+        <geometry>
+            <cylinder length="${length}" radius="${radius}" />
+        </geometry>
+
+    </collision>
+    <inertial>
+        <mass value="0.3"/>
+        <inertia ixx="1e-3" ixy="0" ixz="0" iyy="1e-3" iyz="0" izz="1e-3" />
+    </inertial>
+</link>
+<joint name="rear_right_wheel_joint" type="continuous">
+    <parent link="base_link" />
+    <child link="rear_right_wheel" />
+    <origin xyz="-0.2 -${box_width/2+length/2} -0.05" />
+    <axis xyz="0 1 0" />
+</joint>
+
+<link name="base_link">
+    <visual>
+        <geometry>
+            <box size="${box_length} ${box_width} ${box_height}" />
+        </geometry>
+        <material name="yellow" />
+    </visual>
+    <collision>
+        <origin xyz="-0.02 0 0.035" rpy="0 0 0"  />
+        <geometry>
+            <box size="${box_length} ${box_width} ${box_height}" />
+        </geometry>
+    </collision>
+    <inertial>
+        <origin xyz="-0.02 0 0.035" rpy="0 0 0" />
+        <mass value="1.0" />
+        <inertia ixx="0.00129283" ixy="0" ixz="0" iyy="0.00440742" iyz="0" izz="0.00495208" />
+    </inertial>
+</link>
+
+<link name="base_footprint" />
+
+<joint name="base_joint" type="fixed">
+    <parent link="base_footprint" />
+    <child link="base_link" />
+    <origin xyz="0 0 0.05" rpy="0 0 0" />
+</joint>
+
+<link name="base_scan">
+    <visual>
+        <origin xyz="0 0 -0.05" rpy="0 0 0"  />
+        <geometry>
+            <mesh filename="file://$(find mecanum_launch)/meshes/sensors/hokuyo_ust10.stl" scale="1 1 1" />
+        </geometry>
+        <material name="white" />
+    </visual>
+    <collision>
+        <origin xyz="0 0 -0.0215" rpy="0 0 0" /> 
+        <geometry>
+            <cylinder length="0.055" radius="0.035" />
+        </geometry>
+    </collision>
+    <inertial>
+        <mass value="0.178"/>
+        <origin xyz="0 0 0" /> 
+        <inertia ixx="1.1e-04" ixy="-1.56e-04" ixz="-3.12e-04" iyy="1.85e-04" iyz="-2.23e-04" izz="2.21e-04" />
+    </inertial>
+</link>
+
+
+<joint name="scan_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="base_scan" />
+    <origin xyz="0 0 0.1" rpy="0 0 3.1415" />
+</joint>
+
+
+<gazebo reference="base_scan">
+<material>Gazebo/Blue</material>
+    <sensor name="lidar_sensor" type="ray">
+        <pose>0 0 0 0 0 0</pose>
+        <visualize>true</visualize>
+        <update_rate>10</update_rate>
+        <ray>
+            <scan>
+                <horizontal>
+                    <samples>500</samples>
+                    <resolution>0.72</resolution>
+                    <min_angle>0.0</min_angle>
+                    <max_angle>6.28319</max_angle>
+                </horizontal>
+            </scan>
+            <range>
+                <min>0.120</min>
+                <max>10</max>
+                <resolution>0.015</resolution>
+            </range>
+            <noise>
+                <type>gaussian</type>
+                <mean>0.0</mean>
+                <stddev>0.02</stddev>
+            </noise>
+        </ray>
+        <plugin filename="libgazebo_ros_ray_sensor.so" name="lidar_controller">
+            <frame_name>base_scan</frame_name>
+            <ros>
+                <namespace>/</namespace>
+                <remapping>~/out:=/scan</remapping>
+            </ros>
+            <output_type>sensor_msgs/LaserScan</output_type>
+            <min_intensity>0.0</min_intensity>
+        </plugin>
+    </sensor>
+</gazebo>
+
+</robot>
+
+
