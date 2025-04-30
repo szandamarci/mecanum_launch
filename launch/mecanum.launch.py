@@ -103,7 +103,7 @@ def generate_launch_description():
         launch.substitutions.TextSubstitution(text=os.path.join(
             get_package_share_directory('teleop_twist_joy'), 'config', '')),
             joy_config, launch.substitutions.TextSubstitution(text='.config.yaml')])
-    
+    print(declare_config_filepath)
 
     return LaunchDescription([
         declare_joy_vel,
