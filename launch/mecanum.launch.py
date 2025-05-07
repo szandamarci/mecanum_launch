@@ -29,6 +29,7 @@ def generate_launch_description():
                         executable='robot_state_publisher',
                         parameters=[
                             {'robot_description' : description_raw,
+                             #'use_sim_time' : 'False'
                              }],
                         output='screen')
     
@@ -36,6 +37,7 @@ def generate_launch_description():
                         executable='joint_state_publisher',
                         parameters=[
                             {'robot_description' : description_raw,
+                             #'use_sim_time' : 'False'
                              }],
                         output='screen')
     
@@ -53,7 +55,8 @@ def generate_launch_description():
         launch_arguments={
             'map' : map_file,
             'params_file' : params_file,
-            'slam' : slam 
+            'slam' : slam, 
+            'use_sim_time' : 'False'
         }.items())
     
     joy = Node(package ='joy',
