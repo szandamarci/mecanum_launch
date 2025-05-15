@@ -1,0 +1,16 @@
+{
+    "python.autoComplete.extraPaths": [
+        "/home/marton/mecanum_launch_ws/install/mecanum_pi_launch/lib/python3.10/site-packages",
+        "/home/marton/mecanum_launch_ws/install/mecanum_launch/lib/python3.10/site-packages",
+        "/home/marton/mecanum_launch_ws/install/mecanum_common/local/lib/python3.10/dist-packages",
+        "/opt/ros/humble/lib/python3.10/site-packages",
+        "/opt/ros/humble/local/lib/python3.10/dist-packages"
+    ],
+    "python.analysis.extraPaths": [
+        "/home/marton/mecanum_launch_ws/install/mecanum_pi_launch/lib/python3.10/site-packages",
+        "/home/marton/mecanum_launch_ws/install/mecanum_launch/lib/python3.10/site-packages",
+        "/home/marton/mecanum_launch_ws/install/mecanum_common/local/lib/python3.10/dist-packages",
+        "/opt/ros/humble/lib/python3.10/site-packages",
+        "/opt/ros/humble/local/lib/python3.10/dist-packages"
+    ]
+}

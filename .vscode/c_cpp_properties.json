@@ -1,0 +1,31 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/marton/mecanum_launch_ws/install/nexus_4wd_mecanum_gazebo/include/**",
+        "/home/marton/mecanum_launch_ws/install/mecanum_plugin/include/**",
+        "/home/marton/mecanum_launch_ws/install/mecanum_common/include/**",
+        "/home/marton/mecanum_launch_ws/install/mecanum_4wd_plugin/include/**",
+        "/opt/ros/humble/include/**",
+        "/home/marton/mecanum_launch_ws/src/gopigo_custom/include/**",
+        "/home/marton/mecanum_launch_ws/src/mecanum/mecanum/mecanum/include/**",
+        "/home/marton/mecanum_launch_ws/src/mecanum_4wd_plugin/include/**",
+        "/home/marton/mecanum_launch_ws/src/mecanum_custom/include/**",
+        "/home/marton/mecanum_launch_ws/src/mecanum_plugin/include/**",
+        "/home/marton/mecanum_launch_ws/src/nexus_4wd_mecanum_simulator/nexus_4wd_mecanum_gazebo/include/**",
+        "/home/marton/mecanum_launch_ws/src/urg_node2/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}
