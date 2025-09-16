@@ -3,7 +3,7 @@
 
 <!-- <xacro:include filename="hokuyo_ust10.xacro" /> -->
 <xacro:property name="radius" value="0.05" />
-<xacro:property name="length" value="0.06" />
+<xacro:property name="length" value="0.05" />
 <xacro:property name="box_length" value="0.3" />
 <xacro:property name="box_width" value="0.2" />
 <xacro:property name="box_height" value="0.09" />
@@ -166,7 +166,7 @@
         <geometry>
             <mesh filename="file://$(find mecanum_launch)/meshes/sensors/hokuyo_ust10.stl" scale="1 1 1" />
         </geometry>
-        <material name="white" />
+        <material name="black" />
     </visual>
     <collision>
         <origin xyz="0 0 -0.0215" rpy="0 0 0" /> 
