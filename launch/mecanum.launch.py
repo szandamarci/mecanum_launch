@@ -4,15 +4,18 @@ from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
 from launch.conditions import IfCondition
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.substitutions import LaunchConfiguration
+from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
 from ament_index_python.packages import get_package_share_directory
 from launch_ros.actions import Node
 import xacro
+from launch_ros.substitutions import FindPackageShare
+from moveit_configs_utils import MoveItConfigsBuilder
 
 def generate_launch_description():
-    package_name = 'mecanum_launch'
+    package_name = 'mecanum_moveit_launch'
     bringup_dir = get_package_share_directory('nav2_bringup')
     local_dir = get_package_share_directory(package_name)
+    config_dir = get_package_share_directory('mecanum_moveit_config')
     rviz_dir = os.path.join(local_dir, 'rviz')
     xacro_file = os.path.join(local_dir, 'urdf/mecanum.xacro')
     description_raw = xacro.process_file(xacro_file).toxml()
@@ -25,12 +28,47 @@ def generate_launch_description():
     publish_stamped_twist = launch.substitutions.LaunchConfiguration('publish_stamped_twist')
     config_filepath = launch.substitutions.LaunchConfiguration('config_filepath')
     
+    ros2_control_hardware_type = DeclareLaunchArgument(
+        "ros2_control_hardware_type",
+        default_value="mock_components",
+        description="ROS 2 control hardware interface type to use for the launch file -- possible values: [mock_components, isaac]",
+    )
+    moveit_config = (
+        MoveItConfigsBuilder("mecanum")
+        .robot_description(
+            file_path="config/mecanum.urdf.xacro",
+            mappings={
+                "ros2_control_hardware_type": LaunchConfiguration(
+                    "ros2_control_hardware_type"
+                )
+            },
+        )
+        .robot_description_semantic(file_path="config/mecanum.srdf")
+        .planning_scene_monitor(
+            publish_robot_description=True, publish_robot_description_semantic=True
+        )
+        .trajectory_execution(file_path="config/moveit_controllers.yaml")
+        .planning_pipelines(
+            pipelines=["ompl", "chomp", "pilz_industrial_motion_planner"]
+        )
+        .to_moveit_configs()
+    )
+
+    move_group_node = Node(
+        package="moveit_ros_move_group",
+        executable="move_group",
+        output="screen",
+        parameters=[moveit_config.to_dict()],
+        arguments=["--ros-args", "--log-level", "info"],
+    )
+
+
     robot_state_publisher = Node(package= 'robot_state_publisher',
                         executable='robot_state_publisher',
                         parameters=[
-                            {'robot_description' : description_raw,
+                            {'robot_description' : description_raw,},
                              #'use_sim_time' : 'False'
-                             }],
+                             moveit_config.robot_description],
                         output='screen')
     
     joint_state_publisher = Node(package= 'joint_state_publisher',
@@ -41,12 +79,74 @@ def generate_launch_description():
                              }],
                         output='screen')
     
+    ros2_controllers_path = os.path.join(
+        get_package_share_directory("mecanum_moveit_config"),
+        "config",
+        "ros2_controllers.yaml",
+    )
+
+    ros2_control_node = Node(
+        package="controller_manager",
+        executable="ros2_control_node",
+        parameters=[ros2_controllers_path],
+        remappings=[
+            ("/controller_manager/robot_description", "/robot_description"),
+        ],
+        output="screen",
+    )
+
+    joint_state_broadcaster_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=[
+            "joint_state_broadcaster",
+            "--controller-manager",
+            "/controller_manager",
+        ],
+        parameters=[]
+    )
+
+    arm_controller_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["arm_controller", "-c", "/controller_manager"],
+        parameters=[]
+    )
+
+
+    robot_controllers = PathJoinSubstitution(
+        [
+            FindPackageShare("mecanum_moveit_simulation_github"),
+            "config",
+            "rrbot_controllers.yaml",
+        ]
+    )
+
+    joint_state_broadcaster_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["joint_state_broadcaster"],
+    )
+
+    robot_controller_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["forward_position_controller", "--param-file", robot_controllers],
+    )
+
     rviz = Node(package= 'rviz2',
                 namespace='',
                 executable='rviz2',
                 name='rviz2',
                 arguments=[
                     '-d', [os.path.join(rviz_dir, 'mecanum.rviz')]],
+                parameters=[
+                    moveit_config.robot_description,
+                    moveit_config.robot_description_semantic,
+                    moveit_config.planning_pipelines,
+                    moveit_config.robot_description_kinematics,
+                    moveit_config.joint_limits,
+                ],
                 output='screen')
     
     start_nav_cmd = IncludeLaunchDescription(
@@ -79,6 +179,10 @@ def generate_launch_description():
                 remappings={('/cmd_vel', launch.substitutions.LaunchConfiguration('joy_vel'))}
                 )
     
+    demo_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            os.path.join(config_dir, 'launch', 'demo.launch.py')))
+
     declare_map_yaml_cmd = DeclareLaunchArgument(
         'map', 
         default_value=os.path.join(
@@ -116,7 +220,13 @@ def generate_launch_description():
         declare_config_filepath,
         joy,
         teleop,
-
+        #demo_launch,
+        ros2_control_hardware_type,
+        move_group_node,
+        ros2_control_node,
+        joint_state_broadcaster_spawner,
+        arm_controller_spawner,
+        robot_controller_spawner,
         declare_map_yaml_cmd,
         declare_params_file_cmd,
         declare_slam_cmd,

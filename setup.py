@@ -2,7 +2,7 @@ import os
 from glob import glob
 from setuptools import find_packages, setup
 
-package_name = 'mecanum_launch'
+package_name = 'mecanum_moveit_launch'
 
 setup(
     name=package_name,
