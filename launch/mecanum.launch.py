@@ -28,6 +28,10 @@ def generate_launch_description():
     publish_stamped_twist = launch.substitutions.LaunchConfiguration('publish_stamped_twist')
     config_filepath = launch.substitutions.LaunchConfiguration('config_filepath')
     
+
+
+
+
     ros2_control_hardware_type = DeclareLaunchArgument(
         "ros2_control_hardware_type",
         default_value="mock_components",
@@ -114,25 +118,25 @@ def generate_launch_description():
     )
 
 
-    robot_controllers = PathJoinSubstitution(
-        [
-            FindPackageShare("mecanum_moveit_simulation_github"),
-            "config",
-            "rrbot_controllers.yaml",
-        ]
-    )
+    # robot_controllers = PathJoinSubstitution(
+    #     [
+    #         FindPackageShare("mecanum_moveit_simulation_github"),
+    #         "config",
+    #         "rrbot_controllers.yaml",
+    #     ]
+    # )
 
-    joint_state_broadcaster_spawner = Node(
-        package="controller_manager",
-        executable="spawner",
-        arguments=["joint_state_broadcaster"],
-    )
+    # joint_state_broadcaster_spawner = Node(
+    #     package="controller_manager",
+    #     executable="spawner",
+    #     arguments=["joint_state_broadcaster"],
+    # )
 
-    robot_controller_spawner = Node(
-        package="controller_manager",
-        executable="spawner",
-        arguments=["forward_position_controller", "--param-file", robot_controllers],
-    )
+    # robot_controller_spawner = Node(
+    #     package="controller_manager",
+    #     executable="spawner",
+    #     arguments=["forward_position_controller", "--param-file", robot_controllers],
+    # )
 
     rviz = Node(package= 'rviz2',
                 namespace='',
@@ -220,18 +224,20 @@ def generate_launch_description():
         declare_config_filepath,
         joy,
         teleop,
-        #demo_launch,
+        
         ros2_control_hardware_type,
         move_group_node,
         ros2_control_node,
+        
         joint_state_broadcaster_spawner,
         arm_controller_spawner,
-        robot_controller_spawner,
+        #robot_controller_spawner,
         declare_map_yaml_cmd,
         declare_params_file_cmd,
         declare_slam_cmd,
         robot_state_publisher,
-        joint_state_publisher, 
+        
+        # joint_state_publisher, 
         rviz,
         start_nav_cmd
 
