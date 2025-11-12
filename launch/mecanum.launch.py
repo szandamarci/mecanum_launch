@@ -117,27 +117,6 @@ def generate_launch_description():
         parameters=[]
     )
 
-
-    # robot_controllers = PathJoinSubstitution(
-    #     [
-    #         FindPackageShare("mecanum_moveit_simulation_github"),
-    #         "config",
-    #         "rrbot_controllers.yaml",
-    #     ]
-    # )
-
-    # joint_state_broadcaster_spawner = Node(
-    #     package="controller_manager",
-    #     executable="spawner",
-    #     arguments=["joint_state_broadcaster"],
-    # )
-
-    # robot_controller_spawner = Node(
-    #     package="controller_manager",
-    #     executable="spawner",
-    #     arguments=["forward_position_controller", "--param-file", robot_controllers],
-    # )
-
     rviz = Node(package= 'rviz2',
                 namespace='',
                 executable='rviz2',
@@ -182,10 +161,6 @@ def generate_launch_description():
                 parameters=[config_filepath, {'publish_stamped_twist': publish_stamped_twist}],
                 remappings={('/cmd_vel', launch.substitutions.LaunchConfiguration('joy_vel'))}
                 )
-    
-    demo_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            os.path.join(config_dir, 'launch', 'demo.launch.py')))
 
     declare_map_yaml_cmd = DeclareLaunchArgument(
         'map', 
@@ -237,7 +212,7 @@ def generate_launch_description():
         declare_slam_cmd,
         robot_state_publisher,
         
-        # joint_state_publisher, 
+        #joint_state_publisher, 
         rviz,
         start_nav_cmd
 
