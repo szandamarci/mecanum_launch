@@ -15,7 +15,6 @@ def generate_launch_description():
     package_name = 'mecanum_moveit_launch'
     bringup_dir = get_package_share_directory('nav2_bringup')
     local_dir = get_package_share_directory(package_name)
-    config_dir = get_package_share_directory('mecanum_moveit_config')
     rviz_dir = os.path.join(local_dir, 'rviz')
     xacro_file = os.path.join(local_dir, 'urdf/mecanum.xacro')
     description_raw = xacro.process_file(xacro_file).toxml()
@@ -28,9 +27,6 @@ def generate_launch_description():
     publish_stamped_twist = launch.substitutions.LaunchConfiguration('publish_stamped_twist')
     config_filepath = launch.substitutions.LaunchConfiguration('config_filepath')
     
-
-
-
 
     ros2_control_hardware_type = DeclareLaunchArgument(
         "ros2_control_hardware_type",
@@ -71,17 +67,9 @@ def generate_launch_description():
                         executable='robot_state_publisher',
                         parameters=[
                             {'robot_description' : description_raw,},
-                             #'use_sim_time' : 'False'
                              moveit_config.robot_description],
                         output='screen')
     
-    joint_state_publisher = Node(package= 'joint_state_publisher',
-                        executable='joint_state_publisher',
-                        parameters=[
-                            {'robot_description' : description_raw,
-                             #'use_sim_time' : 'False'
-                             }],
-                        output='screen')
     
     ros2_controllers_path = os.path.join(
         get_package_share_directory("mecanum_moveit_config"),
@@ -199,20 +187,15 @@ def generate_launch_description():
         declare_config_filepath,
         joy,
         teleop,
-        
         ros2_control_hardware_type,
         move_group_node,
         ros2_control_node,
-        
         joint_state_broadcaster_spawner,
         arm_controller_spawner,
-        #robot_controller_spawner,
         declare_map_yaml_cmd,
         declare_params_file_cmd,
         declare_slam_cmd,
         robot_state_publisher,
-        
-        #joint_state_publisher, 
         rviz,
         start_nav_cmd
 
