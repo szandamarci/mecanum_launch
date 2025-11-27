@@ -173,7 +173,7 @@
         <geometry>
             <mesh filename="file://$(find mecanum_moveit_launch)/meshes/sensors/hokuyo_ust10.stl" scale="0.8 0.8 0.8" />
         </geometry>
-        <material name="black" />
+        <material name="orange" />
     </visual>
     <collision>
         <origin xyz="0 0 -0.0215" rpy="0 0 0" /> 
