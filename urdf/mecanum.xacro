@@ -199,7 +199,7 @@
     <visual>
         <origin xyz="-0.005 0.010 -0.035" rpy="1.57075 0 0"  />
         <geometry>
-            <mesh filename="file://$(find mecanum_moveit_launch)/meshes/simplify_link_0.stl" scale="0.0003 0.0003 0.0003" />
+            <mesh filename="file://$(find mecanum_moveit_launch)/meshes/link_0.stl" scale="0.0003 0.0003 0.0003" />
         </geometry>
         <material name="black" />
     </visual>
@@ -227,7 +227,7 @@
     <visual>
         <origin xyz="-0.020 -0.030 -0.065" rpy="1.57075 0 0"  />
         <geometry>
-            <mesh filename="file://$(find mecanum_moveit_launch)/meshes/simplify_link_1.stl" scale="-0.0003 0.0003 0.0003" />
+            <mesh filename="file://$(find mecanum_moveit_launch)/meshes/link_1.stl" scale="-0.0003 0.0003 0.0003" />
         </geometry>
         <material name="orange" />
     </visual>
@@ -255,7 +255,7 @@
     <visual>
         <origin xyz="0.005 -0.115 0.048" rpy="0 0 0"  />
         <geometry>
-            <mesh filename="file://$(find mecanum_moveit_launch)/meshes/simplify_link_2.stl" scale="-0.0003 0.0003 0.0003" />
+            <mesh filename="file://$(find mecanum_moveit_launch)/meshes/link_2.stl" scale="-0.0003 0.0003 0.0003" />
         </geometry>
         <material name="orange" />
     </visual>
@@ -284,7 +284,7 @@
     <visual>
         <origin xyz="0.015 -0.025 0.0235" rpy="0 0 0"  />
         <geometry>
-            <mesh filename="file://$(find mecanum_moveit_launch)/meshes/simplify_link_3.stl" scale="-0.0003 0.0003 0.0003" />
+            <mesh filename="file://$(find mecanum_moveit_launch)/meshes/link_3.stl" scale="-0.0003 0.0003 0.0003" />
         </geometry>
         <material name="orange" />
     </visual>
@@ -312,7 +312,7 @@
     <visual>
         <origin xyz="0.04 -0.020 0.015" rpy="0 0 0"  />
         <geometry>
-            <mesh filename="file://$(find mecanum_moveit_launch)/meshes/simplify_link_4.stl" scale="-0.0003 0.0003 0.0003" />
+            <mesh filename="file://$(find mecanum_moveit_launch)/meshes/link_4.stl" scale="-0.0003 0.0003 0.0003" />
         </geometry>
         <material name="orange" />
     </visual>
@@ -341,7 +341,7 @@
     <visual>
         <origin xyz="0.020 -0.02 0.02" rpy="0 0 0"  />
         <geometry>
-            <mesh filename="file://$(find mecanum_moveit_launch)/meshes/simplify_link_5.stl" scale="-0.0003 0.0003 0.0003" />
+            <mesh filename="file://$(find mecanum_moveit_launch)/meshes/link_5.stl" scale="-0.0003 0.0003 0.0003" />
         </geometry>
         <material name="orange" />
     </visual>
