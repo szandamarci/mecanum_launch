@@ -31,7 +31,7 @@
     <visual>
         <origin xyz="0 0 0" rpy="1.57075 0 0"  />
         <geometry>
-            <mesh filename="file://$(find mecanum_moveit_launch)/meshes/Mecanum_jo.stl" scale="0.0010 0.0010 0.0010" />
+            <mesh filename="file://$(find mecanum_moveit_launch)/meshes/Mecanum.stl" scale="0.0010 0.0010 0.0010" />
         </geometry>
         <material name="black" />
     </visual>
@@ -59,7 +59,7 @@
     <visual>
         <origin xyz="0 0 0" rpy="1.57075 0 0"  />
         <geometry>
-            <mesh filename="file://$(find mecanum_moveit_launch)/meshes/Mecanum_jo.stl" scale="0.0010 0.0010 0.0010" />
+            <mesh filename="file://$(find mecanum_moveit_launch)/meshes/Mecanum.stl" scale="0.0010 0.0010 0.0010" />
         </geometry>
         <material name="black" />
     </visual>
@@ -87,7 +87,7 @@
     <visual>
         <origin xyz="0 0 0" rpy="1.57075 0 0"  />
         <geometry>
-            <mesh filename="file://$(find mecanum_moveit_launch)/meshes/Mecanum_jo.stl" scale="0.0010 0.0010 0.0010" />
+            <mesh filename="file://$(find mecanum_moveit_launch)/meshes/Mecanum.stl" scale="0.0010 0.0010 0.0010" />
         </geometry>
         <material name="black" />
     </visual>
@@ -115,7 +115,7 @@
     <visual>
         <origin xyz="0 0 0" rpy="1.57075 0 0"  />
         <geometry>
-            <mesh filename="file://$(find mecanum_moveit_launch)/meshes/Mecanum_jo.stl" scale="0.0010 0.0010 0.0010" />
+            <mesh filename="file://$(find mecanum_moveit_launch)/meshes/Mecanum.stl" scale="0.0010 0.0010 0.0010" />
         </geometry>
         <material name="black" />
     </visual>
